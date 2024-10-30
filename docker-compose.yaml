@@ -1,0 +1,35 @@
+
+services:
+
+  frontend:
+    build: 
+      context: ./Frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+  
+  server:
+    build: 
+      context: ./Backend
+    environment:
+      - SECRET_KEY=sayantan@1234
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+      - redis
+
+  bun:
+    build: 
+      context: ./Data
+    ports:
+      - "3000:3000"
+  
+  mongo:
+    image: mongo:latest
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
